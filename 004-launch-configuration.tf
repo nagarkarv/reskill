@@ -11,7 +11,7 @@ resource "aws_launch_configuration" "webserver" {
   }
   user_data = <<-EOF
               #!/bin/bash
-              sudo su
+              yum update -y
               yum -y install httpd
               export hostname=$(curl http://169.254.169.254/latest/meta-data/local-hostname) 
               echo "I am host: $hostname " > /var/www/html/index.html
@@ -21,6 +21,6 @@ resource "aws_launch_configuration" "webserver" {
               git clone https://github.com/nagarkarv/reskill-service.git
               cd /reskill-service
               pip install -r requirements.txt
-              nohup python reskillService.py &
+              python reskillService.py
               EOF
 }
